@@ -1,0 +1,38 @@
+{% for teacher in list_teachers %}
+<tr>
+    <td>{{ teacher.id }}</td>
+    <td>{{ teacher.first_name }} {{ teacher.last_name }}</td>
+    <td>{{ teacher.email }}</td>
+    <td>{{ teacher.contact_no }}</td>
+    <td>{{ teacher.Join_date|date:"M d, Y" }}</td>
+    <td>
+        {% for subject in teacher.subject.all %}
+            <span class="badge bg-info text-dark mb-1">{{ subject.name }}</span><br>
+        {% empty %}
+            <span class="text-muted">None</span>
+        {% endfor %}
+    </td>
+    <td>
+        {% for classroom in teacher.classroom.all %}
+            <span class="badge bg-success mb-1">{{ classroom.name }}</span><br>
+        {% empty %}
+            <span class="text-muted">None</span>
+        {% endfor %}
+    </td>
+    <td>{{ teacher.address|truncatewords:8 }}</td>
+    <td>
+        <a href="{% url 'edit_teachers' teacher.id %}" class="btn btn-sm btn-outline-primary mb-1" title="Edit">
+            <i class="bi bi-pencil"></i>
+        </a>
+        <a href="{% url 'delete_teachers' teacher.id %}" class="btn btn-sm btn-outline-danger mb-1" title="Delete">
+            <i class="bi bi-trash"></i>
+        </a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="9" class="text-center text-muted">
+        <i class="bi bi-info-circle me-2"></i>No teachers found.
+    </td>
+</tr>
+{% endfor %}

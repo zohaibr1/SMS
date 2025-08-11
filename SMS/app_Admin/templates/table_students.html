@@ -1,0 +1,45 @@
+  {% for student in list_students %}
+          <tr>
+            <td>{{ student.id }}</td>
+            <td>{{ student.first_name }} {{ student.last_name }}</td>
+            <td>{{ student.classroom.name }}</td>
+            <td>{{ student.contact_no }}</td>
+            
+       <td>
+  {% for subject in student.subject.all %}
+    {% with subject.subject_of_teachers.first as teacher %}
+      {% if teacher %}
+        <span class="badge bg-info text-dark">
+          {{ subject.name }} → {{ teacher.first_name }} {{ teacher.last_name }}
+        </span>
+      {% else %}
+        <span class="badge bg-warning text-dark">
+          {{ subject.name }} → No teacher assigned
+        </span>
+      {% endif %}
+    {% endwith %}
+  {% empty %}
+    <span class="text-muted">No subjects</span>
+  {% endfor %}
+</td>
+
+
+
+            </td>
+            <td>{{ student.address|truncatewords:8 }}</td>
+            <td>
+              <a href="{% url 'edit_students' student.id %}" class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a href="{% url 'delete_students' student.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted py-4">
+              <i class="bi bi-info-circle me-1"></i> No students found.
+            </td>
+          </tr>
+          {% endfor %}

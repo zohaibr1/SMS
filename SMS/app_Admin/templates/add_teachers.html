@@ -170,7 +170,7 @@
     $(document).ready(function(){
         $('#teacherForm').on('submit',function(e){
             e.preventDefault();
-            const formData= new FormDData(this);
+            const formData= new FormData(this);
             $.ajax({
                 url:'',
                 type:'POST',
@@ -183,7 +183,7 @@
                 success: function(response){
                     alert("Teacher Saved Successfully!!!")
                     window.location.href="{% url "list_teachers" %}"
-                }
+                },
                 error: function(xhr){
                         ler error= xhr.response || "an error occured";
                         alert("Failed to save teacher.\n" + error);
