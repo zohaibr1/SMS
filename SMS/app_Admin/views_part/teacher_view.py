@@ -35,6 +35,7 @@ class teacherDashboardView(View):
 
         attendance_records = Attendance.objects.filter(teacher=teacher).order_by('-date')[:5] if teacher else []
 
+        
         context = {
             'teacher': teacher,
             'subjects': teacher.subject.all() if teacher else [],

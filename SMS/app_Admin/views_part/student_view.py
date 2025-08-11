@@ -94,5 +94,5 @@ class anttendanceView(View):
 
         # Return template for normal page load
         
-        return render(request, 's_Attendance.html',{'attendance_records': attendance_records,})
+        return render(request, 's_Attendance.html',{'attendance_records': attendance_records})
     

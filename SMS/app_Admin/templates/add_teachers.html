@@ -7,6 +7,7 @@
     <title>Add Teacher | School Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-7P6pSiv5R+ZlPPh4LMeTj/NkMSp6ckhE+04Aw1+7N8w=" crossorigin="anonymous"></script>
     <style>
         .form-header {
             background: linear-gradient(135deg, #3f51b5, #2196F3);
@@ -49,7 +50,7 @@
                     
                     <!-- Form Body -->
                     <div class="card-body p-4">
-                        <form method="POST" enctype="multipart/form-data">
+                        <form id="teacherForm" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             
                            <!-- Personal Info -->
@@ -165,5 +166,31 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#teacherForm').on('submit',function(e){
+            e.preventDefault();
+            const formData= new FormDData(this);
+            $.ajax({
+                url:'',
+                type:'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers:{
+                    'X-CSRFToken': '{{csrf_token}}'
+                },
+                success: function(response){
+                    alert("Teacher Saved Successfully!!!")
+                    window.location.href="{% url "list_teachers" %}"
+                }
+                error: function(xhr){
+                        ler error= xhr.response || "an error occured";
+                        alert("Failed to save teacher.\n" + error);
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>
